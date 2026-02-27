@@ -6,7 +6,7 @@ def parse_input(filename):
 
         states= lines[0].replace('\n','')
         alphabet= lines[1].replace('\n','')
-        final_states= lines[2].replace('\n','')
+        final_states= lines[2].replace('\n','').split(';')
         initial_state=lines[3].replace('\n','')
 
         transition_function = [el.strip('\n').split(':') for el in lines[4:]]
@@ -19,6 +19,14 @@ def parse_input(filename):
 
 states, alphabet, transition_function, initial_state, final_states = parse_input('input.txt')
 
+print("States:", states)
+print("Alphabet:", alphabet)
+print("Transition Function:")
+pprint.pprint(transition_function)
+print("Initial State:", initial_state)
+print("Final States:", final_states)
+print("type of init state:", type(initial_state))
+print("type of final states:", type(final_states))
 def dfa_acceptor(dfa, input_string):
     states, alphabet, transition_function, initial_state, final_states = dfa
     current_state = initial_state
@@ -34,5 +42,5 @@ def dfa_acceptor(dfa, input_string):
 
     return current_state in final_states
  
-print(dfa_acceptor(parse_input('input.txt'), input('Introdu un cuvant pentru a il verifica daca este acceptat sau nu: ')))
+#print(dfa_acceptor(parse_input('input.txt'), input('Introdu un cuvant pentru a il verifica daca este acceptat sau nu: ')))
 
