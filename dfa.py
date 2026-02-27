@@ -5,7 +5,7 @@ def parse_input(filename):
         lines = f.readlines()
 
         states= lines[0].replace('\n','')
-        alphabet= lines[1].replace('\n','')
+        alphabet= lines[1].replace('\n','').split(',')
         final_states= lines[2].replace('\n','').split(';')
         initial_state=lines[3].replace('\n','')
 
@@ -19,28 +19,36 @@ def parse_input(filename):
 
 states, alphabet, transition_function, initial_state, final_states = parse_input('input.txt')
 
-print("States:", states)
-print("Alphabet:", alphabet)
-print("Transition Function:")
-pprint.pprint(transition_function)
-print("Initial State:", initial_state)
-print("Final States:", final_states)
-print("type of init state:", type(initial_state))
-print("type of final states:", type(final_states))
+# print("States:", states)
+# print("Alphabet:", alphabet)
+# print("Transition Function:")
+# pprint.pprint(transition_function)
+
 def dfa_acceptor(dfa, input_string):
+
     states, alphabet, transition_function, initial_state, final_states = dfa
     current_state = initial_state
+    i = 0
 
-    for symbol in input_string:
-        if symbol not in alphabet:
-            print(f"Simbolul {symbol} nu face parte din alfabet.")
-            return False  
-        if current_state not in transition_function or symbol not in transition_function[current_state]:
-            print(f"Tranzitia pentru starea {current_state} si simbolul {symbol} nu este definita.")
-            return False  # functia de tranzitie nu este complet definita 
-        current_state = transition_function[current_state][symbol]
+    while i < len(input_string):
+
+        match_found = False
+
+        for symbol in sorted(alphabet, key=len, reverse=True): #incerc sa abordez greedy iau cat mai mare pot
+            if input_string.startswith(symbol, i): 
+
+                if current_state in transition_function and symbol in transition_function[current_state]:
+
+
+                    current_state = transition_function[current_state][symbol]
+                    i += len(symbol) #si sar peste simbol 
+                    match_found = True
+                    break
+
+        if not match_found:
+            return False
 
     return current_state in final_states
  
-#print(dfa_acceptor(parse_input('input.txt'), input('Introdu un cuvant pentru a il verifica daca este acceptat sau nu: ')))
+print(dfa_acceptor(parse_input('input.txt'), input('Introdu un cuvant pentru a il verifica daca este acceptat sau nu: ')))
 
