@@ -2,7 +2,7 @@ import pprint
 from parse import parse_input
 
 
-states, alphabet, transition_function, initial_state, final_states = parse_input('input.txt')
+# states, alphabet, transition_function, initial_state, final_states = parse_input('dfa.txt')
 
 # print("States:", states)
 # print("Alphabet:", alphabet)
@@ -35,5 +35,6 @@ def dfa_acceptor(dfa, input_string):
 
     return current_state in final_states
  
-print(dfa_acceptor(parse_input('input.txt'), input('Introdu un cuvant pentru a il verifica daca este acceptat sau nu: ')))
+print(dfa_acceptor(parse_input('dfa.txt'), input('Introdu un cuvant pentru a il verifica daca este acceptat sau nu: ')))
  
+
