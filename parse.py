@@ -1,24 +1,42 @@
+import pprint
+
 def parse_input(filename):
-    with open(filename,'r') as f:
+
+    transition_function = {}
+
+    with open(filename, 'r') as f:
+
         lines = f.readlines()
+        states = lines[1].strip().split()
+        noEdges = int(lines[2].strip())
+        alphabet = []
 
-        machine = input('Parsam un DFA SAU NFA?\n').strip().upper()
+        for el in lines[3:3+noEdges]: #3+noEdges exclusiv 
 
-        states= lines[0].replace('\n','')
-        alphabet= lines[1].replace('\n','').split(',')
-        final_states= lines[2].replace('\n','').split(';')
-        initial_state=lines[3].replace('\n','')
+            el = el.strip().split()
+            leaving_state , arriving_state, symbol = el
 
-        transition_function = [el.strip('\n').split(':') for el in lines[4:]]
-        transition_function = [(el[0],el[1].split(';')) for el in transition_function]
-        transition_function= dict([(el[0], dict([element.split(',') for element in el[1]])) for el in transition_function])
+            if symbol not in alphabet:
+                alphabet.append(symbol)
+
+            if leaving_state not in transition_function:
+                transition_function[leaving_state] = {symbol : arriving_state}
+            else:
+                transition_function[leaving_state].update({symbol : arriving_state})
         
-        if machine == 'NFA':
-            for state in transition_function:
-                for word in list(transition_function[state]):
+             
+        initState = lines[3+noEdges].strip()
+        noFinalStates = int(lines[3+noEdges+1].strip())
+        finalStates = []
 
-                    transition_function[state][word] = transition_function[state][word].split('/')
-          
-        
+        for el in lines[5+noEdges:5+noEdges+noFinalStates]:
+                finalStates.append(el.strip())
+            
+        noWordsToCheck = int(lines[5+noEdges+noFinalStates])
+        wordsToCheck = []
 
-        return ((states, alphabet, transition_function, initial_state, final_states))
+        for el in lines[6+noEdges+noFinalStates:]:
+            wordsToCheck.append(el.strip())
+
+        return(states, alphabet, transition_function, initState, finalStates, wordsToCheck)
+    

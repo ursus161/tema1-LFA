@@ -1,8 +1,0 @@
-q1,q2,q3,q4
-aa,b
-q3
-q1
-q1:b,q4;aa,q2
-q2:aa,q2;b,q3
-q3:aa,q2;b,q3
-q4:b,q4;aa,q4

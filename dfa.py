@@ -1,5 +1,5 @@
 import pprint
-from parse import parse_input
+from parse import parse_input 
 
 
 # states, alphabet, transition_function, initial_state, final_states = parse_input('dfa.txt')
@@ -9,32 +9,42 @@ from parse import parse_input
 # print("Transition Function:")
 # pprint.pprint(transition_function)
 
-def dfa_acceptor(dfa, input_string):
+def dfa_acceptor(dfa):
 
-    states, alphabet, transition_function, initial_state, final_states = dfa
-    current_state = initial_state
-    i = 0
+    states, alphabet, transition_function, initial_state, final_states , words = dfa
+    
+    res = []
+    
 
-    while i < len(input_string):
+    for word in words:
 
-        match_found = False
+        match_found = True # per word si crapa daca in punctul i nu mai poate continua 
+        current_state = initial_state
+        i = 0
 
-        for symbol in sorted(alphabet, key=len, reverse=True): #incerc sa abordez greedy iau cat mai mare pot
-            if input_string.startswith(symbol, i): 
+        while i < len(word):
 
-                if current_state in transition_function and symbol in transition_function[current_state]:
+            found_transition = False #asta e per pas intr un punct dat
+
+            for symbol in sorted(alphabet, key=len, reverse=True): #incerc sa abordez greedy iau cat mai mare pot
+                if word.startswith(symbol, i): 
+
+                    if current_state in transition_function and symbol in transition_function[current_state]:
 
 
-                    current_state = transition_function[current_state][symbol]
-                    i += len(symbol) #si sar peste simbol 
-                    match_found = True
-                    break
+                        current_state = transition_function[current_state][symbol]
+                        i += len(symbol) #si sar peste simbol 
+                        found_transition = True
+                        break
 
-        if not match_found:
-            return False
+            if not found_transition:
+                match_found = False
+                break
 
-    return current_state in final_states
- 
-print(dfa_acceptor(parse_input('dfa.txt'), input('Introdu un cuvant pentru a il verifica daca este acceptat sau nu: ')))
+        res.append("DA" if current_state in final_states and match_found else "NU") 
+
+    return '\n'.join(res)
+
+print(dfa_acceptor(parse_input('dfa_input.txt')))
  
 
