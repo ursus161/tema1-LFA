@@ -42,8 +42,10 @@ def dfa_acceptor(dfa):
                 break
 
         res.append("DA" if current_state in final_states and match_found else "NU") 
-
-    return '\n'.join(res)
+        
+    with open('dfa_output.txt', 'w') as g:
+        g.write('\n'.join(res)) 
+    
 
 print(dfa_acceptor(parse_input('dfa_input.txt')))
  
