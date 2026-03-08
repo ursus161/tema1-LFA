@@ -11,8 +11,10 @@ q4 q4 b
 q1
 1
 q4
-4
+6
 bbbaaaba
 aababab
 aaababbb
 babababa
+abababqqq
+aaaaaaab
