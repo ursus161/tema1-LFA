@@ -13,8 +13,10 @@ q1
 2
 q3
 q1
-4
-aaaab
-baabbb
+6
+aaaabab
+abaabbb
 aabbbaa
 aabbaab
+abbaab
+bbbbbb
