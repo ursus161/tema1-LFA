@@ -1,35 +1,41 @@
 from parse import parse_input
+from dfa import dfa_acceptor
  
-def nfa_acceptor(nfa):
-    states, alphabet, transition_function, initial_state, final_states = nfa
-    
-    current_states = {initial_state}
-    i = 0
 
-    while i < len(input_string):
-
-        match_found = False
-        next_states = set()  #am mai multe cai posibile, fiind NFA
-
-        for symbol in sorted(alphabet, key=len, reverse=True):
-
-            if input_string.startswith(symbol, i):
-                
-                for state in current_states:
-
-                    if state in transition_function and symbol in transition_function[state]:
-                        next_states.update(transition_function[state][symbol])
-
-                if next_states:
-                    i += len(symbol)
-                    match_found = True
-                    current_states = next_states 
-                    break  # problema daca am cv in genul : 'a' si 'aa' mi ar lua direct 'aa'
-
-        if not match_found:
-            return False
-
-    return any(state in final_states for state in current_states)
+# m am gandit sa fac conversie de fiecare data de la orice automat finit nedeterminist la unul determinist
+# ulterior de la un automat finit nedeterminist cu lambda miscari la unul fara lambda miscari
 
 
-print(nfa_acceptor(parse_input('nfa_input.txt')))
+# desi nu s a mentionat la curs, mie mi se pare
+def nfa_to_dfa(states, alphabet, transition_function, init_state, final_states):
+    start = frozenset({init_state}) # o fac frozenset pentru a o avea hashable
+
+    dfa_states = [start]
+    dfa_transition = {}
+    queue = [start]
+
+    while queue: 
+        current = queue.pop(0)
+        dfa_transition[current] = {}
+        for symbol in alphabet:  #ma uit unde merge simbolul symbol si adun tot in acel frozenset
+            next_states = frozenset(
+                s for state in current
+                for s in transition_function.get(state, {}).get(symbol, [])
+            )
+            dfa_transition[current][symbol] = next_states
+            if next_states not in dfa_states:
+                dfa_states.append(next_states)
+                queue.append(next_states)
+
+    dfa_final = [s for s in dfa_states if s & set(final_states)]
+
+  
+    return dfa_states, alphabet, dfa_transition, start, dfa_final
+
+
+
+
+if __name__ == '__main__':
+    states, alphabet, tf, init, finals, words = parse_input('nfa_input.txt')
+    dfa_states, dfa_alphabet, dfa_tf, dfa_init, dfa_finals = nfa_to_dfa(states, alphabet, tf, init, finals)
+    print(dfa_acceptor((dfa_states, dfa_alphabet, dfa_tf, dfa_init, dfa_finals, words)))

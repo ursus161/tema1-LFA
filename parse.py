@@ -5,7 +5,7 @@ def parse_input(filename):
 
     transition_function = {}
     is_nfa = 'nfa' in sys.argv[0].lower() # iau direct din terminal, incerc sa nu mai fac 2 fisiere separate de parse la input
-    is_nfa = True #o hardcodez pana termin implementarea de la nfa.py ptr teste
+    #is_nfa = True #o hardcodez pana termin implementarea de la nfa.py ptr teste
     with open(filename, 'r') as f:
 
         lines = f.readlines()
@@ -51,5 +51,4 @@ def parse_input(filename):
             wordsToCheck.append(el.strip())
 
         return(states, alphabet, transition_function, initState, finalStates, wordsToCheck)
-    
-print(parse_input('nfa_input.txt'))
+     
