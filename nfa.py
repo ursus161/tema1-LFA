@@ -1,6 +1,6 @@
 from parse import parse_input
  
-def nfa_acceptor(nfa, input_string):
+def nfa_acceptor(nfa):
     states, alphabet, transition_function, initial_state, final_states = nfa
     
     current_states = {initial_state}
@@ -32,4 +32,4 @@ def nfa_acceptor(nfa, input_string):
     return any(state in final_states for state in current_states)
 
 
-print(nfa_acceptor(parse_input('nfa.txt'), input('Introdu un cuvant pentru a il verifica daca este acceptat sau nu: ')))
+print(nfa_acceptor(parse_input('nfa_input.txt')))

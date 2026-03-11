@@ -1,9 +1,11 @@
 import pprint
+import sys
 
 def parse_input(filename):
 
     transition_function = {}
-
+    is_nfa = 'nfa' in sys.argv[0].lower() # iau direct din terminal, incerc sa nu mai fac 2 fisiere separate de parse la input
+    is_nfa = True #o hardcodez pana termin implementarea de la nfa.py ptr teste
     with open(filename, 'r') as f:
 
         lines = f.readlines()
@@ -20,9 +22,19 @@ def parse_input(filename):
                 alphabet.append(symbol)
 
             if leaving_state not in transition_function:
-                transition_function[leaving_state] = {symbol : arriving_state}
+                if is_nfa:
+                    transition_function[leaving_state] = {symbol: [arriving_state]}
+                else:
+                    transition_function[leaving_state] = {symbol: arriving_state}
             else:
-                transition_function[leaving_state].update({symbol : arriving_state})
+                if is_nfa:
+                    if symbol not in transition_function[leaving_state]:
+                        transition_function[leaving_state][symbol] = [arriving_state]
+                    else:
+                        transition_function[leaving_state][symbol].append(arriving_state)
+                else: # adica e dfa 
+                    transition_function[leaving_state].update({symbol: arriving_state})
+                
         
              
         initState = lines[3+noEdges].strip()
@@ -40,3 +52,4 @@ def parse_input(filename):
 
         return(states, alphabet, transition_function, initState, finalStates, wordsToCheck)
     
+print(parse_input('nfa_input.txt'))
