@@ -20,6 +20,9 @@ def nfa_acceptor(nfa):
     
                 if word.startswith(symbol, i):
     
+            # din starea state, pe simbolul symbol, unde pot ajunge? raspunsul e appended in next states
+            # practic in acel set colectez toate ramurile nedeterminismului
+
                     for state in current_states:
                         next_states.update(
                             transition_function.get(state, {}).get(symbol, [])
