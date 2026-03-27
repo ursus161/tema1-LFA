@@ -11,9 +11,13 @@ def lambda_closure(states, transition_function):
     closure = set(states) # pornesc cu starile date
 
     while stack:
-        state = stack.pop()
-        for next_st in transition_function.get(state, {}).get('lambda', []):
+
+        state = stack.pop() #iau o stare
+
+        for next_st in transition_function.get(state, {}).get('lambda', []): # pt fiecare stare vad daca are tranz lambda
+
             if next_st not in closure: # daca nu l am vizitat deja
+
                 closure.add(next_st)
                 stack.append(next_st) # il explorez si pe el
 
@@ -63,6 +67,8 @@ def lnfa_acceptor(lnfa):
         res.append("DA" if current_states & set(final_states) else "NU")
 
     with open('lnfa_output.txt', 'w') as g:
+
+        g.write('Alfabet: ' + ' '.join(alphabet) + '\n')
         g.write('\n'.join(res))
 
 

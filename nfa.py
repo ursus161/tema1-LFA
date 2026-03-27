@@ -44,6 +44,8 @@ def nfa_acceptor(nfa):
 
         res.append("DA" if current_states & set(final_states) else "NU")
     with open('nfa_output.txt', 'w') as g:
+
+        g.write('Alfabet: ' + ' '.join(alphabet) + '\n')
         g.write('\n'.join(res))
 
 nfa_acceptor(parse_input("nfa_input.txt"))

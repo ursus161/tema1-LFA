@@ -46,10 +46,8 @@ def dfa_acceptor(dfa):
 
     with open('dfa_output.txt','w') as g:
 
+          g.write('Alfabet: ' + ' '.join(alphabet) + '\n')
           g.write('\n'.join(res))
-
-if __name__ == '__main__' :
-
-    print(dfa_acceptor(parse_input('dfa_input.txt')))
  
-
+ 
+dfa_acceptor(parse_input("dfa_input.txt"))

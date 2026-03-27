@@ -1,3 +1,4 @@
+Alfabet: a b
 DA
 NU
 DA
