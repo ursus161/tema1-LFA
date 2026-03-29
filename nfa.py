@@ -48,4 +48,6 @@ def nfa_acceptor(nfa):
         g.write('Alfabet: ' + ' '.join(alphabet) + '\n')
         g.write('\n'.join(res))
 
-nfa_acceptor(parse_input("nfa_input.txt"))
+if __name__ == "__main__":
+        
+    nfa_acceptor(parse_input("nfa_input.txt"))

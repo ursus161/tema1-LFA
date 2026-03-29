@@ -50,4 +50,5 @@ def dfa_acceptor(dfa):
           g.write('\n'.join(res))
  
  
-dfa_acceptor(parse_input("dfa_input.txt"))
+if __name__ == '__main__':
+    dfa_acceptor(parse_input('dfa_input.txt'))

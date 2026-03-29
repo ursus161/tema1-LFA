@@ -1,4 +1,4 @@
-Alfabet: a lambda b
+Alfabet: a b
 DA
 DA
 NU

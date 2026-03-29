@@ -68,7 +68,7 @@ def lnfa_acceptor(lnfa):
 
     with open('lnfa_output.txt', 'w') as g:
 
-        g.write('Alfabet: ' + ' '.join(alphabet) + '\n')
+        g.write('Alfabet: ' + ' '.join(set( el for el in alphabet if el!= "lambda")) + '\n')
         g.write('\n'.join(res))
 
 
